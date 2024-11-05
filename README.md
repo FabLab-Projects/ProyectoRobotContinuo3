@@ -4,6 +4,19 @@ Today, the search for innovation in robotics is a pressing topic. Every day, new
 
 ## Materials and Design
 The robot has an elongated cylindrical shape, consisting of intercalated discs: 10 solid PLA discs, 11 silicone discs, and 3 PLA node discs. The silicone and PLA discs simulate a kind of vertebral column, providing significant flexibility to the arm, while the node discs are used to secure the nylon threads that apply tension to tilt/move the robot in the desired direction. The robot also includes six continuous rotation servomotors, six pulleys, and a base to support the structure.
+<table>
+    <tr>
+        <td style="text-align: center;">
+            <img src="https://github.com/FabLab-Projects/ProyectoRobotContinuo3/blob/main/main/ImagenRobot2.jpeg" width="400">
+            <p>Continuun Robot.</p>
+        </td>
+        <td style="text-align: center;">
+            <img src="https://github.com/FabLab-Projects/ProyectoRobotContinuo3/blob/main/Images/Robot%20imagen3.jpeg" width="400">
+            <p>Continuun Robot.</p>
+        </td>
+    </tr>
+</table>
+
 
 ## Mechanical Operation
 The robot's movement depends on the control signal from the Arduino, which controls the servomotors that drive the pulleys. These pulleys, in turn, tighten the threads attached to the nodes, thereby tilting the robot. A significant part of the robot's workspace is determined by the nodes, as they are positioned at different heights, referred to as “levels.” The first level is closest to the robot’s base and allows smaller tilts, while levels 2 (mid-height) and 3 (near the end-effector) enable sharper inclinations.
@@ -36,6 +49,16 @@ The PWM signal pins of the servomotors are connected to specific digital pins on
 Each servomotor also has a power pin connected to +5V and a ground pin connected to GND.
 3. Power Supply:
 The entire circuit is powered by the 5V output of the Arduino, which supplies power to both the EMG sensors and the servomotors.
+
+<table>
+    <tr>
+        <td style="text-align: center;">
+            <img src="https://github.com/FabLab-Projects/ProyectoRobotContinuo3/blob/main/main/Circuito.jpeg" alt="Imagen 1" width="500">
+            <p>Circuit of the robot.</p>
+        </td>
+    </tr>
+</table>
+
 ## Code
 Libraries and Pin Definitions:
 The code uses the <Servo.h> library, which makes it easy to control servomotors.
@@ -62,9 +85,39 @@ It uses modoV to activate movement and controls the vertical servo angle (velV) 
 If pot3 or pot4 fall below the thresholds, it restores modoV to 0 and velV to 90.
 6. Data Printing:
 Every millisecond, the code prints the sensor values to the serial port to monitor EMG signals in real time. This is also useful for visualizing the signals in the Python interface with PyQt5.
+
 ## Control
 The control is based on analog measurement of electrical signals using four “Analog EMG Sensors by OYMotion” from “Gravity,” which are dry electromyography sensors. The signal originates from the forearm muscles (anterior and posterior parts) as shown in the figure. The signal changes according to muscle contractions; in this case, if the signal exceeds certain thresholds, it changes the movement state (see state machine figure). The state control depends on the arm action: the left arm controls the vertical movement of the robot (forward or backward), while the right arm controls horizontal movement (left or right). The front part of each arm controls left and forward movements in the right and left arms, respectively, while the rear part of the arms controls right and backward movements. For this version, and given that only four EMG sensors are available, only one robot level can be controlled, ideally level 2 since it is the most versatile.
+<table>
+    <tr>
+        <td style="text-align: center;">
+            <img src="https://github.com/FabLab-Projects/ProyectoRobotContinuo3/blob/main/Images/State%20machine%20Horizontal.png" alt="Imagen 1" width="300">
+            <p>State machine Horizontal movement Right arm.</p>
+        </td>
+        <td style="text-align: center;">
+            <img src="https://github.com/FabLab-Projects/ProyectoRobotContinuo3/blob/main/Images/State%20machine%20Vertical.png" alt="Imagen 2" width="300">
+            <p>State Machine Vetical movement Left arm.</p>
+        </td>
+    </tr>
+</table>
 
-![State machine Right arm](Images/State machine Horizontal.png)
+<table>
+    <tr>
+        <td style="text-align: center;">
+            <img src="https://github.com/FabLab-Projects/ProyectoRobotContinuo3/blob/main/Images/WhatsApp%20Image%202024-11-05%20at%203.48.19%20PM%20(1).jpeg" alt="Imagen 1" width="300">
+            <p>Sensor in Anterior muscle.</p>
+        </td>
+        <td style="text-align: center;">
+            <img src="https://github.com/FabLab-Projects/ProyectoRobotContinuo3/blob/main/Images/WhatsApp%20Image%202024-11-05%20at%203.48.19%20PM%20(2).jpeg" alt="Imagen 2" width="300">
+            <p>EMG Sensor.</p>
+        </td>
+        <td style="text-align: center;">
+            <img src="https://github.com/FabLab-Projects/ProyectoRobotContinuo3/blob/main/Images/WhatsApp%20Image%202024-11-05%20at%203.48.19%20PM.jpeg" alt="Imagen 3" width="300">
+            <p>Sensor in Posterior muscle.</p>
+        </td>
+    </tr>
+</table>
+
+
 ## Conclusion
 The EMG-based control designed for the continuous robot was successfully implemented, allowing the robot to be controlled in two directional axes with acceptable, though not optimal, control. However, there are limitations. One is that the thresholds are very specific, as they correspond to a particular individual, and these thresholds may not apply to other users due to differences in skin impedance. Another drawback is that, with only four sensors, controlling other levels was not possible, so the robot’s potential workspace was not fully utilized.
